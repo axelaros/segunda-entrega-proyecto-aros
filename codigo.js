@@ -72,11 +72,28 @@ const carteleraCine=[
     }
     ]
 const selecPeliculas=document.querySelector("#selecPeliculas");
-const button=document.querySelector("#search");
+let nombrePelicula=document.querySelector("#entrada");
+ 
+nombrePelicula.addEventListener("keyup",buscarPelicula)
+
+function buscarPelicula(){
+    let nombre=nombrePelicula.value
+    console.log(nombre.length);
+    if(nombre.length===0){
+        renderizar()
+    }else{
+        let peliculaEncontrada=carteleraCine.filter(pelicula=>pelicula.nombre.includes(nombre))
+        renderizarUna(peliculaEncontrada);
+        
+    }
+
+}
+
 
 
 
 function renderizar () {
+    document.querySelector(".card").innerHTML=""
     for (const pelicula of carteleraCine) {
        document.querySelector(".card").innerHTML+=`
         <li class="li-item">
@@ -95,6 +112,7 @@ function renderizar () {
         </li>` 
        
     }
+
     carteleraCine.forEach(pelicula =>document.getElementById(`boton${pelicula.id}`).addEventListener("click",function () {
     agregarCarro(pelicula)
     } ))
@@ -103,6 +121,56 @@ function renderizar () {
     }))
    
 }
+
+function renderizarUna (peliculas) {
+    document.querySelector(".card").innerHTML=""
+    if(peliculas.length !==0){
+
+    
+    
+    for (const pelicula of peliculas) {
+       document.querySelector(".card").innerHTML+=`
+        <li class="li-item">
+        <div class="contenedorFoto">
+            <img  class="contenedorImg" src="${pelicula.foto}">
+        </div>
+          <div class="container"> 
+          <h2 class="card-title"> <b>Titulo: ${pelicula.nombre} </b></h2>
+          <p class="card-text"> Genero ${pelicula.genero} </p>
+          <p class="card-text"> Precio: $${pelicula.precio}</p>
+          <p class="card-text"> Duracion:${pelicula.duracion}</p>
+          <p class="card-text">Estreno: ${pelicula.estreno}</p>
+          <button class="btn btn-secondary" id="detalles${pelicula.id}"> Mas Detalles</button>
+          <button class="btn btn-secondary" id="boton${pelicula.id}"> Agregar al carro</button>
+          </div>   
+        </li>` 
+       
+    }
+
+    peliculas.forEach(pelicula =>document.getElementById(`boton${pelicula.id}`).addEventListener("click",function () {
+    agregarCarro(pelicula)
+    } ))
+    peliculas.forEach(pelicula=>document.getElementById(`detalles${pelicula.id}`).addEventListener("click", function (){
+    detalles(pelicula)
+    })) 
+
+
+}else{
+    document.querySelector(".card").innerHTML+=`
+    <li class="li-item">
+<div>     
+   <p> no se encuentran peliculas con ese nombre </p>
+   <img  class="noEncontrado" src" >
+   </div>
+    </li>` 
+   
+}
+}
+
+
+
+
+
 renderizar()
 function agregarCarro(nuevaPelicula) {
     carrito.push(nuevaPelicula)
@@ -124,42 +192,3 @@ function detalles (detalle){
 
 
 
-
-/*function filtrarPeliculas(filtro){
-    let filtrar=carteleraCine.filter((el)=>{
-        return el.nombre.includes(filtro)
-    })
-    crearHTML(filtrar);
-}
-
-console.log(carteleraCine);
-
-
-function crearHTML(array){
- let html
-    for (const pelicula of array) {
-       html=document.querySelector(".card").innerHTML+=`
-        <li class="li-item">
-        <div class="contenedorFoto">
-            <img  class="contenedorImg" src="${pelicula.foto}">
-        </div>
-          <div class="hola"> 
-          <h2 class="card-title"> <b>Titulo: ${pelicula.nombre} </b></h2>
-          <p class="card-text"> Genero ${pelicula.genero} </p>
-          <p class="card-text"> Precio: $${pelicula.precio}</p>
-          <p class="card-text"> Duracion:${pelicula.duracion}</p>
-          <p class="card-text">Estreno: ${pelicula.estreno}</p>
-          <button class="btn btn-secondary" id="detalles${pelicula.id}"> Mas Detalles</button>
-          <button class="btn btn-secondary" id="boton${pelicula.id}"> Agregar al carro</button>
-          </div>   
-        </li>` 
-       
-    }
-}
-
-crearHTML(carteleraCine)
-
-button.addEventListener("click" ,(e)=>{
-   e.preventDefault();
-   filtrarPeliculas(search.value)
-  })*/
