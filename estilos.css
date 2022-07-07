@@ -66,3 +66,24 @@ margin-left: 30px;
 
 
 }
+
+#entrada{
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid black;
+
+}
+
+header{
+    display: flex;
+    justify-content: flex-end;
+    height: 60px;
+    width: 99%;
+}
+
+.btn btn-dark{
+    display:flex;
+     width: 50px;
+    height: 50px;
+   gap: 10px;
+}

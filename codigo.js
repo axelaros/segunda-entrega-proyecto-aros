@@ -71,7 +71,27 @@ const carteleraCine=[
         id:7
     }
     ]
-const selecPeliculas=document.querySelector("#selecPeliculas");
+
+
+const GuardarLocalS= (clave,valor)=>{
+    localStorage.setItem(clave,valor);
+}
+
+for (const peliculas of carteleraCine) {
+    GuardarLocalS(peliculas.id , JSON.stringify(peliculas))
+}
+
+GuardarLocalS("listaPeliculas",JSON.stringify(carteleraCine));
+
+
+/*let listaA=JSON.parse(localStorage.getItem("listaPeliculas"));
+console.log(listaA);*/
+
+ 
+
+
+
+
 let nombrePelicula=document.querySelector("#entrada");
  
 nombrePelicula.addEventListener("keyup",buscarPelicula)
@@ -126,8 +146,6 @@ function renderizarUna (peliculas) {
     document.querySelector(".card").innerHTML=""
     if(peliculas.length !==0){
 
-    
-    
     for (const pelicula of peliculas) {
        document.querySelector(".card").innerHTML+=`
         <li class="li-item">
@@ -156,25 +174,39 @@ function renderizarUna (peliculas) {
 
 
 }else{
-    document.querySelector(".card").innerHTML+=`
-    <li class="li-item">
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'no se encuentran peliculas con ese nombre!',
+    })
+  /* document.querySelector(".card").innerHTML+=`
+    
+   
+   <li class="li-item">
 <div>     
    <p> no se encuentran peliculas con ese nombre </p>
-   <img  class="noEncontrado" src" >
+   <img src="./img/not-found.png" alt="" height=200px>
    </div>
-    </li>` 
-   
+    </li>` */
+
 }
 }
-
-
-
 
 
 renderizar()
-function agregarCarro(nuevaPelicula) {
+
+
+
+
+function agregarCarro(nuevaPelicula) { 
     carrito.push(nuevaPelicula)
-    alert(`agregaste la pelicula ${nuevaPelicula.nombre} al carro`)
+    Swal.fire(
+        'listo!',
+        `agregaste  ${nuevaPelicula.nombre} al carro`,
+        'success'
+      )
+      
+      console.log(listaA);
     console.log(carrito)
     document.getElementById("tablaCarrito").innerHTML+=`
     <tr>  
@@ -185,10 +217,37 @@ function agregarCarro(nuevaPelicula) {
 
 
 
+
 function detalles (detalle){
      let detalles= carteleraCine.find(elemento=>elemento.id == detalle.id)
      alert(detalles.descripcion)
 }
 
+let Cart=document.getElementById("botin")
+Cart.addEventListener("click",()=> {
+    
+     /*agregarCarrito()
+     mostrarCarrito()*/
+    
+   
+})
 
+/*function agregarCarrito(id){
+let agregarPelicula=carteleraCine.find(pelicula.id===id)
+console.log(agregarPelicula);
+carrito.push(agregarPelicula)
+mostrarCarrito(agregarPelicula)
+}
 
+function mostrarCarrito (agregarPelicula){
+let div=document.createElement("div")
+div.classList.add("peliculaEnCarrito")
+div.innerHTML = `<p>${agregarPelicula.nombre}</p>
+                 <p>precio:${agregarPelicula.precio}</p>
+                 <button class="boton-eliminar"</button> `
+                  Cart.appendChild(div)
+}
+
+function actualizarCarrito(){
+
+}*/
